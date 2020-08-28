@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,28 +14,25 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/mail_viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
-    
-    <com.google.android.material.circularreveal.CircularRevealFrameLayout
+
+    <FrameLayout
         android:id="@+id/main_buttonSheet"
+        style="@style/Widget.Design.BottomSheet.Modal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.Design.BottomSheet.Modal"
-        app:behavior_hideble="false"
-        app:behavior_peekHight="90dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <GridLayout
-            android:id="@+id/main_drawerGrid"
+        <GridView
+            android:id="@+id/main_drawerGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:numColumns="4"
-            android:stretchMode="columnWidth"
-            android:layout_gravity="center">
-        </GridLayout>
+            android:stretchMode="columnWidth" />
 
-    </com.google.android.material.circularreveal.CircularRevealFrameLayout>
+    </FrameLayout>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

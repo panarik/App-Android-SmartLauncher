@@ -1,5 +1,6 @@
 package com.github.panarik.smartlauncher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -18,10 +19,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    View myBottomSheet;
-    GridView mDrawerGridView;
-    BottomSheetBehavior mBottomSheetBehavior;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void ititializeDrawer() {
 
-        myBottomSheet = findViewById(R.id.main_buttonSheet);
-        mDrawerGridView = findViewById(R.id.main_drawerGridView);
-        mBottomSheetBehavior = BottomSheetBehavior.from(myBottomSheet);
+        View myBottomSheet = findViewById(R.id.main_buttonSheet); //layout
+        final GridView mDrawerGridView = findViewById(R.id.main_drawerGridView);
+        final BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(myBottomSheet);
 
         mBottomSheetBehavior.setHideable(false);
         mBottomSheetBehavior.setPeekHeight(300);
@@ -47,6 +44,41 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerGridView.setAdapter(new AppAdapter(getApplicationContext(), installedAppList));
 
+        //BottomSheetBehavior возвращается обратно в исходное положение
+        mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                //если свернуто
+                if (newState == BottomSheetBehavior.STATE_HIDDEN //starts collapse
+                        &&
+                        mDrawerGridView
+                                .getChildAt(0) //first app
+                                .getY() //position
+                                !=0 //different from NULL OR already exist
+                )
+                {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //продолжаем разворачивать виджет
+                }
+
+                //если в движении
+                if (newState == BottomSheetBehavior.STATE_DRAGGING //ahead dragging
+                        &&
+                        mDrawerGridView
+                                .getChildAt(0) //first app
+                                .getY() //position
+                                !=0 //different from NULL OR already exist
+                )
+                {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED); //продолжаем разворачивать виджет
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
     }
 
     //получаем image, name и package всех приложений и формируем ArrayList из них

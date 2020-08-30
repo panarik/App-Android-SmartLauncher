@@ -18,6 +18,7 @@
 
     </LinearLayout>
 
+    <!-- тут выпадающее меню с приложениями -->
     <FrameLayout
         android:id="@+id/main_buttonSheet"
         style="@style/Widget.Design.BottomSheet.Modal"
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
+        <!-- сетка с приложениями -->
         <GridView
             android:id="@+id/main_drawerGridView"
             android:layout_width="match_parent"
